@@ -14,7 +14,7 @@ curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add
 # If Curl is not installed on your system, you can install it through the following command as root
 sudo apt install curl
 
-# Add Xenial Kubernetes Repository on both the nodes
+# Add Xenial Kubernetes Repository on both the master and worker nodes
 sudo apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main"
 
 # Install Kubeadm
@@ -23,4 +23,21 @@ sudo apt install kubeadm
 # Check the version number of Kubeadm 
 kubeadm version
 
+# for calico CNI: 192.168.0.0/16 or for starting a flannel CNI: 10.244.0.0/16
 sudo kubeadm init --pod-network-cidr=192.168.0.0/16 --apiserver-advertise-address=192.168.0.30
+
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+# display status of nodes
+kubectl get nodes
+
+# display status of PODS
+kubectl get pods --all-namespaces
+
+# display detailed status of PODS
+kubectl get -o wide pods --all-namespaces
+
+#kubectl apply -f https://docs.projectcalico.org/v3.9/manifests/calico.yaml
+kubectl apply -f https://docs.projectcalico.org/v3.0/getting-started/kubernetes/installation/hosted/kubeadm/1.7/calico.yaml
