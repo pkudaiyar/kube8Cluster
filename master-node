@@ -39,5 +39,9 @@ kubectl get pods --all-namespaces
 # display detailed status of PODS
 kubectl get -o wide pods --all-namespaces
 
+# networking using Calico
 #kubectl apply -f https://docs.projectcalico.org/v3.9/manifests/calico.yaml
 kubectl apply -f https://docs.projectcalico.org/v3.0/getting-started/kubernetes/installation/hosted/kubeadm/1.7/calico.yaml
+
+# for creating the dashboard - execute this command before starting nodes
+kubectl create -f https://raw.githubusercontent.com/kubernetes/dashboard/v1.10.1/src/deploy/recommended/kubernetes-dashboard.yaml
