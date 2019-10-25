@@ -45,3 +45,21 @@ kubectl apply -f https://docs.projectcalico.org/v3.0/getting-started/kubernetes/
 
 # for creating the dashboard - execute this command before starting nodes
 kubectl create -f https://raw.githubusercontent.com/kubernetes/dashboard/v1.10.1/src/deploy/recommended/kubernetes-dashboard.yaml
+
+# Enable proxy
+kubectl proxy
+
+# Create a service account for dashboard
+kubectl create serviceaccount dashboard -n default
+
+# Add cluster binding rules for ur roles on dashboard
+kubectl create clusterrolebinding dashboard-admin -n default \
+  --clusterrole=cluster-admin \
+  --serviceaccount=default:dashboard
+  
+# Generate secret key to paste into dashboard
+ kubectl get secret $(kubectl get serviceaccount dashboard -o jsonpath="{.secrets[0].name}") -o jsonpath="{.data.token}" | base64 --decode
+  
+# access dashboard
+http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/#!/login
+
