@@ -30,6 +30,8 @@ mkdir -p $HOME/.kube
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
+# a cluster join token will be created, copy and keep for joing the worker nodes later
+
 # display status of nodes
 kubectl get nodes
 
@@ -62,4 +64,16 @@ kubectl create clusterrolebinding dashboard-admin -n default \
   
 # access dashboard
 http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/#!/login
+
+# Join the work nodes using the token created earlier
+
+# for generating the token again, run in master
+sudo kubeadm create --print-join-command
+
+# on master, for deploying a NGINX App through CLI. Usually its done via YAML file
+
+
+
+
+
 
