@@ -1,26 +1,26 @@
-// on master node
+# on master node
 
-// assuming Ubuntu 18.04 LTS system.
+# assuming Ubuntu 18.04 LTS system.
 
-//install docker on moster and worker nodes
+# install docker on moster and worker nodes
 sudo apt install docker.io
 
-// enable docker service utility
+# enable docker service utility
 sudo systemctl enable docker
 
-//Add the Kubernetes signing key on both the nodes
+# Add the Kubernetes signing key on both the nodes
 curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add
 
-//If Curl is not installed on your system, you can install it through the following command as root
+# If Curl is not installed on your system, you can install it through the following command as root
 sudo apt install curl
 
-//Add Xenial Kubernetes Repository on both the nodes
+# Add Xenial Kubernetes Repository on both the nodes
 sudo apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main"
 
-//Install Kubeadm
+# Install Kubeadm
 sudo apt install kubeadm
 
-//check the version number of Kubeadm 
+# Check the version number of Kubeadm 
 kubeadm version
 
 sudo kubeadm init --pod-network-cidr=192.168.0.0/16 --apiserver-advertise-address=192.168.0.30
